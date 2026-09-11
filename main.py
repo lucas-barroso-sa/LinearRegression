@@ -38,17 +38,7 @@ plt.ylabel("Sensor 2 (Zigomático Maior)")
 
 plt.grid(True, linestyle='--', alpha=1)
 
-
-
-## TODO(montar discursão)
-
 #questão 4
-
-# Questão 4 - Testando diferentes valores de q para o MQO Polinomial
-# TODO(montar discutsão)
-
-
-# Questão 4 - Seleção Automática de q para o MQO Polinomial
 
 valores_q = [1, 2, 3, 4, 5, 6] 
 melhor_q = 1
@@ -82,7 +72,6 @@ for grau in valores_q:
 print(f"\n[+] Script selecionou automaticamente q={melhor_q} como o melhor compromisso.")
 
 # Questão 5 e 6 - Validação Monte Carlo e Resultados
-#TODO(Armazenar na lista)
 print("\n--- Resultados Monte Carlo (R=500) ---")
 
 # 1. MQO Tradicional
