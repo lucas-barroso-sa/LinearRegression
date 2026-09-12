@@ -109,3 +109,55 @@ class LinearRegression:
             acuracias.append(acuracia_atual)
             
         return acuracias
+
+    def random_subsampling_validation(self, X_full, y_full, R=500, test_size=0.2):
+        """
+        Executa a validação por amostragem aleatória (Random Subsampling).
+        Retorna duas listas com o MSE e o R2 de todas as rodadas.
+        """
+        mses = []
+        r2s = []
+        N_total = X_full.shape[0]
+        N_train = int(N_total * (1 - test_size)) 
+        
+        indices = np.arange(N_total)
+        
+        for rodada in range(R):
+            np.random.shuffle(indices)
+            
+            idx_train = indices[:N_train]
+            idx_test = indices[N_train:]
+            
+            X_train_mc = X_full[idx_train]
+            y_train_mc = y_full[idx_train]
+            
+            X_test_mc = X_full[idx_test]
+            y_test_mc = y_full[idx_test]
+            
+            # Instancia um NOVO modelo repassando todos os hiperparâmetros
+            modelo_mc = LinearRegression(
+                X_train=X_train_mc, 
+                Y_train=y_train_mc, 
+                fit_intercept=self.fit_in, 
+                solver=self.solver, 
+                q=self.q,
+                lamb=self.lamb
+            )
+            
+            modelo_mc.fit()
+            
+            y_pred_mc = modelo_mc.predict(X_test_mc)
+            
+            # MSE
+            erro = y_test_mc - y_pred_mc
+            mse_atual = np.mean(erro ** 2)
+            
+            # R2
+            ss_res = np.sum(erro ** 2)
+            ss_tot = np.sum((y_test_mc - np.mean(y_test_mc)) ** 2)
+            r2_atual = 1 - (ss_res / ss_tot)
+            
+            mses.append(mse_atual)
+            r2s.append(r2_atual)
+            
+        return mses, r2s

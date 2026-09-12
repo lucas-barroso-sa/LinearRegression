@@ -93,6 +93,8 @@ acc_poly = modelo_poly.monte_carlo_validation(X, Y, Y_rotulos, R=500)
 
 print(f"MQO Polinomial - Média: {np.mean(acc_poly):.4f} | Desvio: {np.std(acc_poly):.4f} | Max: {np.max(acc_poly):.4f} | Min: {np.min(acc_poly):.4f}")
 
+plt.tight_layout()
+plt.savefig("espalhamento_emg.png", dpi=150)
 plt.show()
 
 
